@@ -13,10 +13,24 @@ jobs:
         continue-on-error: false
         strategy:
             matrix:
-                platform:
-                    - amd64
-                    - arm64
-                    - arm
+                amd64:
+                    - platform: amd64
+                    - filters: |
+                          linux/386
+                arm64:
+                    - platform: arm64
+                    - filters: |
+                          linux/386
+                          linux/amd64
+                          linux/amd64/v2
+                          linux/amd64/v3
+                arm:
+                    - platform: arm
+                    - filters: |
+                          linux/386
+                          linux/amd64
+                          linux/amd64/v2
+                          linux/amd64/v3
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -38,10 +52,10 @@ jobs:
                   platforms: ${{ matrix.platform }}
             - name: Filter platforms
               id: filtered-platforms
-              run: |
-                  PLATFORMS=$(echo "${{ steps.setup-qemu.outputs.platforms }}" | sed 's/,linux\/386//')
-                  
-                  echo "platforms=$PLATFORMS" >> $GITHUB_OUTPUT
+              uses: dnd-mapp/actions/filter-string@main
+              with:
+                  input-value: ${{ steps.setup-qemu.outputs.platforms }}
+                  filters: ${{ matrix.filters }}
             - name: Set up Docker Buildx
               id: setup-buildx
               uses: docker/setup-buildx-action@v3

@@ -36,11 +36,17 @@ jobs:
               uses: docker/setup-qemu-action@v3
               with:
                   platforms: ${{ matrix.platform }}
+            - name: Filter platforms
+              id: filtered-platforms
+              run: |
+                  PLATFORMS=$(echo "${{ steps.setup-qemu.outputs.platforms }}" | sed 's/,linux\/386//')
+                  
+                  echo "platforms=$PLATFORMS" >> $GITHUB_OUTPUT
             - name: Set up Docker Buildx
               id: setup-buildx
               uses: docker/setup-buildx-action@v3
               with:
-                  platforms: ${{ steps.setup-qemu.outputs.platforms }}
+                  platforms: ${{ steps.filtered-platforms.outputs.platforms }}
             - name: Build and push
               uses: docker/build-push-action@v6
               id: docker-build

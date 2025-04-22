@@ -22,12 +22,12 @@ jobs:
               uses: actions/checkout@v4
             - name: Set up Docker metadata
               id: setup-metadata
-              uses: ./gen-docker-meta@main
+              uses: dnd-mapp/actions/gen-docker-meta@main
               with:
                   image-name: ${{ inputs.image-name }}
                   release-tags: ${{ startsWith(github.head_ref, 'release/') }}
             - name: Login to GCR
-              uses: ./docker-login@main
+              uses: dnd-mapp/actions/docker-login@main
               with:
                   username: ${{ github.actor }}
                   password: ${{ secrets.GITHUB_TOKEN }}
@@ -80,7 +80,7 @@ jobs:
                   pattern: digests-*
                   merge-multiple: true
             - name: Login to GCR
-              uses: ./docker-login@main
+              uses: dnd-mapp/actions/docker-login@main
               with:
                   username: ${{ github.actor }}
                   password: ${{ secrets.GITHUB_TOKEN }}
@@ -88,7 +88,7 @@ jobs:
               uses: docker/setup-buildx-action@v3
             - name: Set up Docker metadata
               id: setup-metadata
-              uses: ./gen-docker-meta@main
+              uses: dnd-mapp/actions/gen-docker-meta@main
               with:
                   image-name: ${{ inputs.image-name }}
                   release-tags: ${{ startsWith(github.head_ref, 'release/') }}

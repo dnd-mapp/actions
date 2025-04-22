@@ -13,18 +13,16 @@ jobs:
         continue-on-error: false
         strategy:
             matrix:
-                amd64:
+                include:
                     - platform: amd64
                     - filters: |
                           linux/386
-                arm64:
                     - platform: arm64
                     - filters: |
                           linux/386
                           linux/amd64
                           linux/amd64/v2
                           linux/amd64/v3
-                arm:
                     - platform: arm
                     - filters: |
                           linux/386

@@ -5,7 +5,7 @@ inputs:
         description: The string that needs to be filtered on.
         required: true
     filters:
-        description: The strings that need to be removed.
+        description: A list of strings that need to be removed from the input value.
         required: true
 outputs:
     output-value:
@@ -21,7 +21,7 @@ runs:
               filtered=()
               
               IFS=',' read -r a array <<< "${{ inputs.input-value }}"
-              IFS='\n' read -r -a filters <<< "${{ inputs.filters }}"
+              filters=("${{ inputs.filters }}")
               
               for item in "${array[@]}"; do
                 if [[ ! " ${filters[@]} " =~ " $item " ]]; then
@@ -29,6 +29,10 @@ runs:
                 fi
               done
               
-              platforms=$(IFS=','; echo "${filtered[*]}")
+              if [[ ${#filtered[@]} -eq 0 ]]; then
+                platforms=""
+              else
+                platforms=$(IFS=','; echo "${filtered[*]}")
+              fi
               
               echo "output-value=$platforms" >> $GITHUB_OUTPUT

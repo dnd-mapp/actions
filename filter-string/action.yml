@@ -8,7 +8,7 @@ inputs:
         description: A string containing a list of comma separated items that need to be removed from the input value.
         required: true
 outputs:
-    output-value:
+    platforms:
         description: The filtered string
         value: ${{ steps.filter-string.outputs.output-value }}
 runs:

@@ -14,14 +14,14 @@ jobs:
         strategy:
             matrix:
                 platform: [amd64, arm64, arm]
-                filters: [[linux/386], [linux/386, linux/amd64, linux/amd64/v2, linux/amd64/v3]]
+                filters: ["linux/386", "linux/386,linux/amd64,linux/amd64/v2,linux/amd64/v3"]
                 exclude:
                     - platform: amd64
-                      filters: [linux/386, linux/amd64, linux/amd64/v2, linux/amd64/v3]
+                      filters: "linux/386,linux/amd64,linux/amd64/v2,linux/amd64/v3"
                     - platform: arm64
-                      filters: [linux/386]
+                      filters: "linux/386"
                     - platform: arm
-                      filters: [linux/386]
+                      filters: "linux/386"
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4

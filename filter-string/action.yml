@@ -5,7 +5,7 @@ inputs:
         description: The string that needs to be filtered on.
         required: true
     filters:
-        description: A list of strings that need to be removed from the input value.
+        description: A string containing a list of comma separated items that need to be removed from the input value.
         required: true
 outputs:
     output-value:
@@ -21,7 +21,7 @@ runs:
               filtered=()
               
               IFS=',' read -r a array <<< "${{ inputs.input-value }}"
-              filters=("${{ inputs.filters }}")
+              IFS=',' read -r a filters <<< "${{ inputs.filters }}"
               
               for item in "${array[@]}"; do
                 if [[ ! " ${filters[@]} " =~ " $item " ]]; then

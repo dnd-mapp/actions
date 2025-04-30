@@ -1,13 +1,12 @@
 name: Build
 on:
     workflow_call:
-        inputs:
+        secrets:
             COOKIE_SIGNING_SECRET:
                 description: The secret to sign cookies with
-                type: string
-                default: ''
+                required: false
 env:
-    COOKIE_SIGNING_SECRET: ${{ inputs.COOKIE_SIGNING_SECRET }}
+    COOKIE_SIGNING_SECRET: ${{ secrets.COOKIE_SIGNING_SECRET }}
 jobs:
     build-and-test:
         name: Build & Test

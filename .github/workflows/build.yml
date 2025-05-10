@@ -5,8 +5,12 @@ on:
             COOKIE_SIGNING_SECRET:
                 description: The secret to sign cookies with
                 required: false
+            ENCRYPTION_KEY:
+                description: The key used to encrypt to private key, which itself is used for signing JWTs
+                required: false
 env:
     COOKIE_SIGNING_SECRET: ${{ secrets.COOKIE_SIGNING_SECRET }}
+    ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
 jobs:
     build-and-test:
         name: Build & Test

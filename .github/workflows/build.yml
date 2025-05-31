@@ -2,15 +2,27 @@ name: Build
 on:
     workflow_call:
         secrets:
+            DATABASE_URL:
+                description: The database connection URL.
+                required: false
             COOKIE_SIGNING_SECRET:
                 description: The secret to sign cookies with
                 required: false
             ENCRYPTION_KEY:
                 description: The key used to encrypt to private key, which itself is used for signing JWTs
                 required: false
+            EMAIL_USER:
+                description: The username of the user of the email service.
+                required: false
+            EMAIL_PASSWORD:
+                description: The password of the user for the email service.
+                required: false
 env:
+    DATABASE_URL: ${{ secrets.DATABASE_URL }}
     COOKIE_SIGNING_SECRET: ${{ secrets.COOKIE_SIGNING_SECRET }}
     ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+    EMAIL_USER: ${{ secrets.EMAIL_USER }}
+    EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
 jobs:
     build-and-test:
         name: Build & Test

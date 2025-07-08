@@ -23,6 +23,7 @@ env:
     ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
     EMAIL_USER: ${{ secrets.EMAIL_USER }}
     EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+    NX_NATIVE_COMMAND_RUNNER: false
 jobs:
     build-and-test:
         name: Build & Test
